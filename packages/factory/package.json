@@ -1,0 +1,30 @@
+{
+  "name": "@aaronsb/mcp-component-factory",
+  "version": "0.1.0",
+  "description": "Factory: generate an operation-dispatch tool per service from a curated manifest over an API descriptor, with per-service patches for hooks, formatters, and hints, and a build-time check that the manifest is a subset of the descriptor.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronsb/mcp-components.git",
+    "directory": "packages/factory"
+  },
+  "files": [
+    "build"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@aaronsb/mcp-component-core": "0.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

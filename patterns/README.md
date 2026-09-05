@@ -17,4 +17,6 @@ Tiers: `observed` (seen in one server), `repeated` (independently arrived at in 
 **Not for.** The cases where the component hurts or does not apply.
 ```
 
+Some patterns are pages without a package. They describe a shape a server should follow in its own code, where extracting a component would carry more of the server than the pattern. A page-only pattern says so in its **Adopt** section and links the ADRs that show it done.
+
 Keep the page under a screen. The ADRs in the source servers hold the long form and the page links to them.

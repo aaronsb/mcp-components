@@ -1,0 +1,30 @@
+{
+  "name": "@aaronsb/mcp-component-accounts",
+  "version": "0.1.0",
+  "description": "Accounts: the local OAuth authorization-code flow with PKCE and a loopback redirect, an XDG credential store, a multi-account registry, a refreshing token service, and the account lifecycle as agent-callable operations.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronsb/mcp-components.git",
+    "directory": "packages/accounts"
+  },
+  "files": [
+    "build"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@aaronsb/mcp-component-core": "0.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
