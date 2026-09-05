@@ -1,12 +1,12 @@
 {
-  "name": "@aaronsb/practice-queue",
+  "name": "@aaronsb/mcp-component-queue",
   "version": "0.1.0",
   "description": "One tool call, many ordered steps: result references between steps, bail or continue on failure, a destructive-operation guardrail, and a compact report.",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aaronsb/practices.git",
+    "url": "https://github.com/aaronsb/mcp-components.git",
     "directory": "packages/queue"
   },
   "files": [
@@ -22,7 +22,7 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@aaronsb/practice-core": "0.1.0"
+    "@aaronsb/mcp-component-core": "0.1.0"
   },
   "engines": {
     "node": ">=20.0.0"

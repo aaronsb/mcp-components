@@ -11,7 +11,7 @@
 **Adopt.**
 
 ```ts
-import { runQueue, queueInputSchema, nestedQueueHandler } from '@aaronsb/practice-queue';
+import { runQueue, queueInputSchema, nestedQueueHandler } from '@aaronsb/mcp-component-queue';
 
 const options = { handlers, guard, maxOperations: 16 };
 handlers.queue_operations = nestedQueueHandler(options);   // a queue may hold a queue
@@ -24,6 +24,6 @@ const report = await runQueue(args, options);
 return toMcp(report);
 ```
 
-Handlers return `StepResult` from `@aaronsb/practice-core`. Return `refs` for anything a later step should be able to address. Return `blocked: true` when a policy declines a step.
+Handlers return `StepResult` from `@aaronsb/mcp-component-core`. Return `refs` for anything a later step should be able to address. Return `blocked: true` when a policy declines a step.
 
 **Not for.** Operations the vendor can batch in one HTTP call. That is a different shape, one tool and one operation across many items, with no ordering or references between them. Give it its own mode rather than borrowing this one.

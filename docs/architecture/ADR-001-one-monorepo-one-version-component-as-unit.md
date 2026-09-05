@@ -5,7 +5,7 @@ deciders:
   - aaronsb
 ---
 
-# ADR-001: One monorepo, one version, the practice as the unit
+# ADR-001: One monorepo, one version, the component as the unit
 
 ## Context
 
@@ -17,9 +17,9 @@ The framing behind the repo: an MCP server is the front-end application in a cli
 
 ## Decision
 
-One repository, `practices`, holding one package per practice under `packages/`, with a thin `core` for the shared result shape. Every package carries the same version. A release bumps them together, tags once, and CI publishes every package by OIDC trusted publishing.
+One repository, `mcp-components`, holding one package per component under `packages/`, with a thin `core` for the shared result shape. Every package carries the same version. A release bumps them together, tags once, and CI publishes every package by OIDC trusted publishing.
 
-The unit is the practice: a page in `patterns/` stating the claim and its evidence, the code, and tests that encode the claim. A practice can be retired when the evidence turns.
+The unit is the component: a page in `patterns/` stating the claim and its evidence, the code, and tests that encode the claim. A component can be retired when the evidence turns.
 
 Packages depend on `core` and on nothing else on the shelf. Clients, auth, and tool schemas stay in the servers.
 

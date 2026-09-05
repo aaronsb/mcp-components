@@ -1,8 +1,8 @@
 {
-  "name": "practices",
+  "name": "mcp-components",
   "version": "0.1.0",
   "private": true,
-  "description": "An importable library of practices that seem to work when LLM agents call tools. One monorepo, one version, many small packages.",
+  "description": "Composable components for MCP servers built as applications: the middle layer between protocol primitives and a finished server. One monorepo, one version, many small packages.",
   "type": "module",
   "workspaces": [
     "packages/*"

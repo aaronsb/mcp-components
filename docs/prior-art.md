@@ -30,7 +30,7 @@ Verdict: none of the practices exists as a reusable package. Pieces exist for ea
 
 ## What this changes
 
-- Each practice page cites the nearest prior art above so a reader can judge the gap.
-- The OAuth practice builds on openid-client for the exchange and offers the keychain through @napi-rs/keyring. Only the loopback listener, the registry, and the lifecycle tool are ours.
-- The factory practice targets descriptors, with OpenAPI, Google Discovery, and GraphQL introspection as adapters. The subset check is the part nobody has.
-- The queue practice names SEP-1610 as the spec direction and callmux as the nearest code.
+- Each component page cites the nearest prior art above so a reader can judge the gap.
+- The OAuth component builds on openid-client for the exchange and offers the keychain through @napi-rs/keyring. Only the loopback listener, the registry, and the lifecycle tool are ours.
+- The factory component targets descriptors, with OpenAPI, Google Discovery, and GraphQL introspection as adapters. The subset check is the part nobody has.
+- The queue component names SEP-1610 as the spec direction and callmux as the nearest code.

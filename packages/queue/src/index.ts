@@ -9,7 +9,7 @@
  * step on request, with a single next-steps block taken from the last success.
  */
 
-import { extractNextSteps, firstLine, stripNextSteps, type StepResult } from '@aaronsb/practice-core';
+import { extractNextSteps, firstLine, stripNextSteps, type StepResult } from '@aaronsb/mcp-component-core';
 
 // ── Public types ─────────────────────────────────────────────────
 

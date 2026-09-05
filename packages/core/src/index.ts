@@ -1,7 +1,7 @@
 /**
  * Shared shapes for agent-facing tool results.
  *
- * Every practice in this repo speaks in `StepResult`: the text an agent reads,
+ * Every component in this repo speaks in `StepResult`: the text an agent reads,
  * structured `refs` a later step can address by name, and flags for the two
  * ways a step can fail to do its work.
  */

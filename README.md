@@ -1,4 +1,4 @@
-# practices
+# mcp-components
 
 Composable components for MCP servers built as applications, extracted from servers in daily use.
 
@@ -6,16 +6,16 @@ An MCP server is the front end. The protocol's primitives are its atomic element
 
 ## Packages
 
-| Package | Practice |
+| Package | Component |
 |---------|----------|
-| `@aaronsb/practice-core` | Shared result shape, next-steps block helpers, first-line summaries |
-| `@aaronsb/practice-queue` | One call, many ordered steps, with references between steps and bail or continue on failure |
+| `@aaronsb/mcp-component-core` | Shared result shape, next-steps block helpers, first-line summaries |
+| `@aaronsb/mcp-component-queue` | One call, many ordered steps, with references between steps and bail or continue on failure |
 
 Every package carries the same version. A release tags the repo once and publishes every package.
 
-## Reading a practice
+## Reading a component
 
-Each practice has a page in [`patterns/`](./patterns) with four parts: the claim, what goes wrong without it, the evidence, and how to adopt it. The code lives in `packages/<name>` and its tests are the claim written as assertions.
+Each component has a page in [`patterns/`](./patterns) with four parts: the claim, what goes wrong without it, the evidence, and how to adopt it. The code lives in `packages/<name>` and its tests are the claim written as assertions.
 
 ## Development
 
