@@ -13,6 +13,8 @@ The same agent-facing layers were hand-copied across a dozen MCP servers: next-s
 
 The layers are not MCP-specific. They are practices an agent reasons well with, observed across servers.
 
+The framing behind the repo: an MCP server is the front-end application in a client/server relationship, and the protocol's primitives are its atomic elements, tools as controls, resources as views, elicitation as dialogs. Most published servers are API wrappers assembled straight from those primitives. The servers this repo draws from are built as applications, and what they share is a middle layer of composable components between the primitives and the finished server, the way an editor has find, formatters, and help between its widgets and the product. This repo is that middle layer.
+
 ## Decision
 
 One repository, `practices`, holding one package per practice under `packages/`, with a thin `core` for the shared result shape. Every package carries the same version. A release bumps them together, tags once, and CI publishes every package by OIDC trusted publishing.

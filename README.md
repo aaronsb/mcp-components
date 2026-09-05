@@ -1,8 +1,8 @@
 # practices
 
-An importable library of practices that seem to work when LLM agents call tools.
+Composable components for MCP servers built as applications, extracted from servers in daily use.
 
-Each package on this shelf is one practice: a claim about what an agent does differently when the practice is present, the code that implements it, and tests that hold the claim. The practices were extracted from MCP servers in production use and carry an evidence line saying where and for how long. Nothing here is a framework. A server takes the packages it wants and ignores the rest.
+An MCP server is the front end. The protocol's primitives are its atomic elements: a tool is a control, a resource is a view, elicitation is a dialog. A server assembled straight from those is the equivalent of a form built from raw widgets, and most servers stop there, as thin wrappers over an API. Between the primitives and a finished server sits a middle layer, the components a text editor or a mail client would take for granted: a batch runner, a draft buffer, next-action affordances, an account manager, a curated view of a large API. This repo is that layer. Each package is one such component, with the claim it makes about agent behaviour, the code, and the tests that hold the claim.
 
 ## Packages
 
