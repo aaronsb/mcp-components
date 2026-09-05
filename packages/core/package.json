@@ -1,0 +1,27 @@
+{
+  "name": "@aaronsb/practice-core",
+  "version": "0.1.0",
+  "description": "Shared shapes for agent-facing tool results: step results, next-step hint markers, first-line summaries.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronsb/practices.git",
+    "directory": "packages/core"
+  },
+  "files": [
+    "build"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

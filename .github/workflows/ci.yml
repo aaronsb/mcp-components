@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, fix/*, feat/* ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      # Vitest transpiles without type-checking and tests are excluded from
+      # the build, so a type error in a test only fails here.
+      - run: npm run type-check
+      - run: npm test
+      - run: npm run build
+
+  engines-floor:
+    # Runs the oldest Node we claim to support, since every other job runs
+    # whatever is current.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test

@@ -1,0 +1,29 @@
+---
+status: Accepted
+date: 2026-09-04
+deciders:
+  - aaronsb
+---
+
+# ADR-001: One monorepo, one version, the practice as the unit
+
+## Context
+
+The same agent-facing layers were hand-copied across a dozen MCP servers: next-step hints, a scratchpad buffer, a batch executor, workspace file staging, operation-dispatch tools, a capabilities resource, progressive reveal, rendering facades. Each copy drifted. Jira and Confluence each carried a separate ADF pipeline, and every gap hit in one server was already solved in another.
+
+The layers are not MCP-specific. They are practices an agent reasons well with, observed across servers.
+
+## Decision
+
+One repository, `practices`, holding one package per practice under `packages/`, with a thin `core` for the shared result shape. Every package carries the same version. A release bumps them together, tags once, and CI publishes every package by OIDC trusted publishing.
+
+The unit is the practice: a page in `patterns/` stating the claim and its evidence, the code, and tests that encode the claim. A practice can be retired when the evidence turns.
+
+Packages depend on `core` and on nothing else on the shelf. Clients, auth, and tool schemas stay in the servers.
+
+## Consequences
+
+- A server adopts one package in an afternoon and is not pulled into the rest.
+- Lockstep versioning means a change to one package bumps all. The cost is noise in version numbers. The benefit is one tag, one publish, and no matrix of compatible versions.
+- Each package must be registered as a trusted publisher on npmjs.com before its first release. The workflow filename `npm-publish.yml` is part of that registration.
+- Extraction order follows maturity: the queue executor first, then the scratchpad, the tool factory, and the local OAuth flow.

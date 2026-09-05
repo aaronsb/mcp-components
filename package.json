@@ -1,0 +1,34 @@
+{
+  "name": "practices",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An importable library of practices that seem to work when LLM agents call tools. One monorepo, one version, many small packages.",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "vitest run",
+    "type-check": "tsc -b packages/*/tsconfig.json",
+    "lint": "eslint packages/*/src",
+    "clean": "rm -rf packages/*/build",
+    "version:sync": "node scripts/sync-versions.mjs",
+    "release:patch": "node scripts/release.mjs patch",
+    "release:minor": "node scripts/release.mjs minor",
+    "release:major": "node scripts/release.mjs major",
+    "publish:all": "npm publish --workspaces --provenance --access public"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@types/node": "^20.11.24",
+    "eslint": "^9.39.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0",
+    "vitest": "^4.0.18"
+  }
+}

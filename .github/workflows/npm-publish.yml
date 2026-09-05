@@ -1,0 +1,79 @@
+# Publish every workspace package to npm by GitHub OIDC on tag push.
+#
+# THE FILENAME IS LOAD-BEARING. npmjs.com registers a trusted publisher against
+# a repository AND a workflow filename; each package in this repo is registered
+# as `npm-publish.yml`. Rename or move it and npm stops recognising the identity.
+#
+# There is deliberately no NPM_TOKEN, no NODE_AUTH_TOKEN, and no `registry-url:`
+# on setup-node. OIDC has no secret to expire.
+#
+# Versions are lockstep: one tag, one version, all packages. A package whose
+# version is already on the registry is skipped rather than failed, so a
+# partial publish can be re-run.
+name: Publish to npm
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      # Trusted publishing needs npm >= 11.5.1. An older npm looks for a token,
+      # finds none, and fails with a 401 that says nothing about OIDC.
+      - name: Upgrade npm past the trusted-publishing floor
+        run: |
+          npm install -g 'npm@>=11.5.1'
+          npm --version
+
+      - run: npm ci
+
+      # The tag is not evidence that anything was checked.
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm test
+      - run: npm run build
+
+      # A pre-release must not become `latest`. Anything after `-` is a
+      # pre-release under semver and gets its identifier as the dist-tag.
+      - name: Determine npm dist-tag
+        id: npm-tag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          case "$VERSION" in
+            *-*)
+              PRE="${VERSION#*-}"
+              PRE="${PRE%%.*}"
+              case "$PRE" in
+                ''|*[!a-zA-Z]*) TAG="next" ;;
+                *) TAG="$PRE" ;;
+              esac
+              ;;
+            *) TAG="latest" ;;
+          esac
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Publish workspaces
+        run: |
+          set -e
+          for dir in packages/*/; do
+            NAME=$(node -p "require('./$dir/package.json').name")
+            VERSION=$(node -p "require('./$dir/package.json').version")
+            if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+              echo "skip $NAME@$VERSION: already published"
+              continue
+            fi
+            npm publish --workspace "$NAME" --provenance --access public --tag "${{ steps.npm-tag.outputs.tag }}"
+          done
