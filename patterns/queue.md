@@ -6,6 +6,8 @@
 
 **Evidence.** `repeated`. Arrived at separately in google-workspace-mcp (ADR-203 Operation Queue, ADR-308 queue and batch modes, ADR-104 destructive guardrails) and in jira-cloud and confluence-cloud (ADR-203 Operation Queue, ADR-202 guardrails). In use since early 2026. Reconciled here: structured refs from Google, the guardrail hook and text-extraction fallback from Jira. The Confluence copy passed unresolvable references through as literal strings; that was a silent failure and is dropped.
 
+**Prior art.** [SEP-1610](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1610) states the design at the protocol level with abort-only failure and no implementation. [callmux](https://github.com/edimuj/callmux) is the nearest code, with positional pipeline mapping and no error strategy. See [docs/prior-art.md](../docs/prior-art.md).
+
 **Adopt.**
 
 ```ts
