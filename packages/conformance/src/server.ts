@@ -4,7 +4,7 @@
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequestSchema, ListToolsRequestSchema, type CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { toMcp, type StepResult } from '@aaronsb/mcp-component-core';
 import { runQueue, queueInputSchema, nestedQueueHandler, type QueueOptions, type StepHandler } from '@aaronsb/mcp-component-queue';
 import { TextpadManager, createTextpadHandler, textpadInputSchema } from '@aaronsb/mcp-component-textpad';
@@ -115,14 +115,14 @@ export function createReferenceServer(options: ReferenceServerOptions): Referenc
 
   const server = new Server({ name: 'mcp-components-reference', version: '0.1.0' }, { capabilities: { tools: {} } });
   server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
-  server.setRequestHandler(CallToolRequestSchema, async req => {
+  server.setRequestHandler(CallToolRequestSchema, async (req): Promise<CallToolResult> => {
     epoch++;
     const handler = handlers[req.params.name];
-    if (!handler) return toMcp({ text: `Unknown tool: ${req.params.name}`, isError: true });
+    if (!handler) return toMcp({ text: `Unknown tool: ${req.params.name}`, isError: true }) as CallToolResult;
     try {
-      return toMcp(await handler(req.params.arguments ?? {}, { index: 0, depth: 0 }));
+      return toMcp(await handler(req.params.arguments ?? {}, { index: 0, depth: 0 })) as CallToolResult;
     } catch (err) {
-      return toMcp({ text: err instanceof Error ? err.message : String(err), isError: true });
+      return toMcp({ text: err instanceof Error ? err.message : String(err), isError: true }) as CallToolResult;
     }
   });
 
