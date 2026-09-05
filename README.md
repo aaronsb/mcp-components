@@ -10,6 +10,7 @@ An MCP server is the front end. The protocol's primitives are its atomic element
 |---------|----------|
 | `@aaronsb/mcp-component-core` | Shared result shape, next-steps block helpers, first-line summaries |
 | `@aaronsb/mcp-component-queue` | One call, many ordered steps, with references between steps and bail or continue on failure |
+| `@aaronsb/mcp-component-textpad` | A line-addressed buffer the agent composes in, validated per edit, sent to a target chosen late |
 
 Every package carries the same version. A release tags the repo once and publishes every package.
 
