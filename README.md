@@ -19,6 +19,19 @@ An MCP server is the front end. The protocol's primitives are its atomic element
 
 Every package carries the same version. A release tags the repo once and publishes every package.
 
+## Patterns without packages
+
+Some shapes belong in a server's own code. Their pages carry the same claim, evidence, and adoption sections and link the ADRs where the shape is done in full.
+
+| Pattern | What it settles |
+|---------|-----------------|
+| [capabilities](./patterns/capabilities.md) | One resource that describes the domain so the agent reads instead of probing |
+| [facade](./patterns/facade.md) | Faithful content reads, concise results, ids on every row, breadcrumbs to more |
+| [dispatch](./patterns/dispatch.md) | One tool per entity with an operation enum |
+| [visibility](./patterns/visibility.md) | Disabled actions leave the tool list; dangerous ones need two switches |
+| [cache](./patterns/cache.md) | Unchanged records come back as one line, keyed by the source's own stamp |
+| [elicitation](./patterns/elicitation.md) | Intent-driven field selection, ranked discovery, and field search |
+
 ## Reading a component
 
 Each component has a page in [`patterns/`](./patterns) with four parts: the claim, what goes wrong without it, the evidence, and how to adopt it. The code lives in `packages/<name>` and its tests are the claim written as assertions.
@@ -31,5 +44,7 @@ npm test
 npm run build
 npm run release:patch   # bump all packages, tag, push; CI publishes
 ```
+
+The `conformance` package is the closed loop: a reference server with every component wired, driven through the pinned `@modelcontextprotocol/sdk` client over an in-memory transport, with every tool schema and result validated against the vendored spec schema for the SDK's protocol version. Its tool list is a file snapshot, so a schema change in any component shows as a diff. See ADR-002.
 
 Publishing is by GitHub OIDC trusted publishing. Each package must be registered on npmjs.com against this repository and the workflow file `npm-publish.yml` before its first release.

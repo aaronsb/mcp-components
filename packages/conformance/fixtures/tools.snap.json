@@ -1,0 +1,295 @@
+[
+  {
+    "name": "textpad",
+    "description": "Compose and edit content in a line-addressed buffer, then send it to a target.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": [
+            "create",
+            "view",
+            "list",
+            "discard",
+            "insert_lines",
+            "append_lines",
+            "replace_lines",
+            "remove_lines",
+            "copy_lines",
+            "send"
+          ],
+          "description": "The textpad operation to perform."
+        },
+        "textpadId": {
+          "type": "string",
+          "description": "Textpad ID from create (required for every operation except create and list)."
+        },
+        "label": {
+          "type": "string",
+          "description": "Human-readable label (create)."
+        },
+        "content": {
+          "type": "string",
+          "description": "Text to add. Multi-line content is split on newlines (create, insert_lines, append_lines, replace_lines)."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "text",
+            "markdown",
+            "json",
+            "csv"
+          ],
+          "description": "Buffer format; picks the validator (create)."
+        },
+        "target": {
+          "description": "create: an object describing where the buffer goes, whose `type` names the send target. send: the send target name (workspace)."
+        },
+        "startLine": {
+          "type": "number",
+          "description": "1-based first line (view, replace_lines, remove_lines, copy_lines)."
+        },
+        "endLine": {
+          "type": "number",
+          "description": "1-based last line, inclusive (view, replace_lines, remove_lines, copy_lines)."
+        },
+        "afterLine": {
+          "type": "number",
+          "description": "Insert after this line; 0 prepends (insert_lines, copy_lines, attach)."
+        },
+        "fromTextpadId": {
+          "type": "string",
+          "description": "Source buffer (copy_lines)."
+        },
+        "path": {
+          "type": "string",
+          "description": "JSON path such as $.items[0].name (json_get, json_set, json_delete, json_insert)."
+        },
+        "value": {
+          "description": "Value to set or insert (json_set, json_insert)."
+        },
+        "source": {
+          "type": "string",
+          "description": "Where to attach or import from (attach, import)."
+        },
+        "sourceParams": {
+          "type": "object",
+          "description": "Parameters for the import source (import)."
+        },
+        "filename": {
+          "type": "string",
+          "description": "File to attach (attach)."
+        },
+        "refId": {
+          "type": "string",
+          "description": "Attachment reference to remove (detach)."
+        },
+        "targetParams": {
+          "type": "object",
+          "description": "Parameters for the send target (send)."
+        },
+        "keep": {
+          "type": "boolean",
+          "default": true,
+          "description": "Keep the buffer after a successful send (send)."
+        }
+      },
+      "required": [
+        "operation"
+      ]
+    }
+  },
+  {
+    "name": "manage_workspace",
+    "description": "List, read, write, delete, mkdir, or move files in the workspace directory.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": [
+            "list",
+            "read",
+            "write",
+            "delete",
+            "mkdir",
+            "move"
+          ],
+          "description": "The workspace operation to perform."
+        },
+        "path": {
+          "type": "string",
+          "description": "Workspace-relative path (read, write, delete, mkdir, move; optional subdirectory for list)."
+        },
+        "content": {
+          "type": "string",
+          "description": "Text to write (write)."
+        },
+        "to": {
+          "type": "string",
+          "description": "Destination workspace-relative path (move)."
+        }
+      },
+      "required": [
+        "operation"
+      ]
+    }
+  },
+  {
+    "name": "manage_accounts",
+    "description": "List, authenticate, check, refresh, rescope, or remove accounts.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": [
+            "list",
+            "authenticate",
+            "status",
+            "refresh",
+            "scopes",
+            "remove"
+          ],
+          "description": "list: show accounts. authenticate: add an account through the browser. status: token and scopes. refresh: fetch a fresh token. scopes: re-authorize with a different service list. remove: delete the account and its credential."
+        },
+        "email": {
+          "type": "string",
+          "description": "Account identifier (required for status, refresh, scopes, remove)."
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "readwrite"
+          ],
+          "default": "readwrite",
+          "description": "'read' asks for read-only scopes where the provider offers them (authenticate, scopes)."
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "notes"
+            ]
+          },
+          "description": "Services to authorize (scopes; optional for authenticate, default all)."
+        },
+        "confirmWriteAccess": {
+          "type": "boolean",
+          "description": "Accept that some services stay writable when read-only was requested (authenticate, scopes)."
+        },
+        "category": {
+          "type": "string",
+          "description": "Label for the account, e.g. personal or work (authenticate)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Free-text note for the account (authenticate)."
+        }
+      },
+      "required": [
+        "operation"
+      ]
+    }
+  },
+  {
+    "name": "manage_notes",
+    "description": "List, read, and create notes.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": [
+            "list",
+            "get",
+            "create"
+          ],
+          "description": "list: list notes | get: read one note | create: create a note"
+        },
+        "email": {
+          "type": "string",
+          "description": "Account email address"
+        },
+        "max": {
+          "type": "number",
+          "description": "How many"
+        },
+        "noteId": {
+          "type": "string",
+          "description": "Note id"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title"
+        }
+      },
+      "required": [
+        "operation",
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "queue_operations",
+    "description": "Run several operations in order in one call, with $N.field references between them.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "maxItems": 16,
+          "description": "Ordered list of operations to execute (max 16).",
+          "items": {
+            "type": "object",
+            "required": [
+              "tool",
+              "args"
+            ],
+            "properties": {
+              "tool": {
+                "type": "string",
+                "enum": [
+                  "textpad",
+                  "manage_workspace",
+                  "manage_accounts",
+                  "manage_notes"
+                ],
+                "description": "Which tool to call."
+              },
+              "args": {
+                "type": "object",
+                "description": "Arguments for the tool call. Use $N.field to reference a value from operation N (e.g. $0.id)."
+              },
+              "onError": {
+                "type": "string",
+                "enum": [
+                  "bail",
+                  "continue"
+                ],
+                "default": "bail",
+                "description": "bail (default): stop the queue at this failure. continue: record the error and proceed."
+              }
+            }
+          }
+        },
+        "detail": {
+          "type": "string",
+          "enum": [
+            "summary",
+            "full"
+          ],
+          "default": "summary",
+          "description": "summary (default): one line per operation. full: complete output of each operation."
+        }
+      },
+      "required": [
+        "operations"
+      ]
+    }
+  }
+]

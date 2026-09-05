@@ -71,6 +71,10 @@ jobs:
           for dir in packages/*/; do
             NAME=$(node -p "require('./$dir/package.json').name")
             VERSION=$(node -p "require('./$dir/package.json').version")
+            if [ "$(node -p "require('./$dir/package.json').private === true")" = "true" ]; then
+              echo "skip $NAME: private"
+              continue
+            fi
             if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
               echo "skip $NAME@$VERSION: already published"
               continue

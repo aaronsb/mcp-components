@@ -1,0 +1,21 @@
+{
+  "name": "@aaronsb/mcp-component-conformance",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Stands up an in-memory MCP server with every component wired, drives it through the pinned SDK client, and validates every tool schema and result against the vendored spec schema.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@aaronsb/mcp-component-accounts": "0.1.0",
+    "@aaronsb/mcp-component-core": "0.1.0",
+    "@aaronsb/mcp-component-factory": "0.1.0",
+    "@aaronsb/mcp-component-guardrails": "0.1.0",
+    "@aaronsb/mcp-component-hints": "0.1.0",
+    "@aaronsb/mcp-component-queue": "0.1.0",
+    "@aaronsb/mcp-component-textpad": "0.1.0",
+    "@aaronsb/mcp-component-workspace": "0.1.0"
+  }
+}

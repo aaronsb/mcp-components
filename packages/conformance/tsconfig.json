@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./build",
+    "rootDir": "./src",
+    "resolveJsonModule": true
+  },
+  "references": [
+    { "path": "../core" }, { "path": "../queue" }, { "path": "../textpad" }, { "path": "../hints" },
+    { "path": "../workspace" }, { "path": "../guardrails" }, { "path": "../accounts" }, { "path": "../factory" }
+  ],
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.ts"]
+}
