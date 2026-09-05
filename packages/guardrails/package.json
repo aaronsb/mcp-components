@@ -1,0 +1,30 @@
+{
+  "name": "@aaronsb/mcp-component-guardrails",
+  "version": "0.1.0",
+  "description": "Guardrails: a sliding-window limit on destructive operations that deflects to a review UI, and a composable policy chain that allows, blocks, or downgrades a write.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronsb/mcp-components.git",
+    "directory": "packages/guardrails"
+  },
+  "files": [
+    "build"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@aaronsb/mcp-component-core": "0.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

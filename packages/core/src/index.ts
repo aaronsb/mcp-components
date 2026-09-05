@@ -6,10 +6,20 @@
  * ways a step can fail to do its work.
  */
 
+/** A non-text content block, such as an image, returned beside the text. */
+export interface ContentBlock {
+  type: string;
+  data?: string;
+  mimeType?: string;
+  [key: string]: unknown;
+}
+
 /** What one tool invocation hands back. */
 export interface StepResult {
   /** Markdown for the agent. May end with a next-steps block. */
   text: string;
+  /** Extra content blocks, such as an inline image. */
+  blocks?: ContentBlock[];
   /** Structured values a later step can reference by field name, e.g. `{ id: '123' }`. */
   refs?: Record<string, unknown>;
   /** The step ran and reported failure. */
@@ -23,7 +33,7 @@ export interface StepResult {
 
 /** The MCP content shape most servers return; `fromMcp` converts it. */
 export interface McpToolResponse {
-  content: Array<{ type: string; text?: string }>;
+  content: Array<{ type: string; text?: string; [key: string]: unknown }>;
   isError?: boolean;
 }
 
@@ -33,13 +43,14 @@ export function fromMcp(response: McpToolResponse, refs?: Record<string, unknown
     .filter(c => c.type === 'text' && typeof c.text === 'string')
     .map(c => c.text as string)
     .join('\n');
-  return { text, refs, isError: response.isError === true };
+  const blocks = response.content.filter(c => c.type !== 'text') as ContentBlock[];
+  return { text, refs, isError: response.isError === true, ...(blocks.length ? { blocks } : {}) };
 }
 
 /** Wrap a `StepResult` back into MCP content. */
 export function toMcp(result: StepResult): McpToolResponse {
   return {
-    content: [{ type: 'text', text: result.text }],
+    content: [{ type: 'text', text: result.text }, ...(result.blocks ?? [])],
     ...(result.isError || result.blocked ? { isError: true } : {}),
   };
 }

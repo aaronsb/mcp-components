@@ -1,0 +1,30 @@
+{
+  "name": "@aaronsb/mcp-component-hints",
+  "version": "0.1.0",
+  "description": "Next-step hints: a catalog of follow-on tool calls keyed by context, rendered under every result with the current ids filled in.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronsb/mcp-components.git",
+    "directory": "packages/hints"
+  },
+  "files": [
+    "build"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@aaronsb/mcp-component-core": "0.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

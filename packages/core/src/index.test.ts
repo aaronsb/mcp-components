@@ -38,11 +38,12 @@ describe('firstLine', () => {
 
 describe('mcp conversion', () => {
   it('joins text blocks and carries the error flag', () => {
-    const r = fromMcp({ content: [{ type: 'text', text: 'a' }, { type: 'image' }, { type: 'text', text: 'b' }], isError: true });
-    expect(r).toEqual({ text: 'a\nb', refs: undefined, isError: true });
+    const r = fromMcp({ content: [{ type: 'text', text: 'a' }, { type: 'image', data: 'x' }, { type: 'text', text: 'b' }], isError: true });
+    expect(r).toEqual({ text: 'a\nb', refs: undefined, isError: true, blocks: [{ type: 'image', data: 'x' }] });
   });
   it('marks blocked results as errors on the way out', () => {
     expect(toMcp({ text: 'no', blocked: true })).toEqual({ content: [{ type: 'text', text: 'no' }], isError: true });
     expect(toMcp({ text: 'ok' })).toEqual({ content: [{ type: 'text', text: 'ok' }] });
+    expect(toMcp({ text: 'img', blocks: [{ type: 'image', data: 'AA==', mimeType: 'image/png' }] }).content).toHaveLength(2);
   });
 });
